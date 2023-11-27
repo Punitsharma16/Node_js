@@ -11,5 +11,5 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/profile',(req,res)=>{
-    res.send('<h2>Punit sharma</h2>');
+    res.send('<h2>Punit sharma</h2>')
 })
