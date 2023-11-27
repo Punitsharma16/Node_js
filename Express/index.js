@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const product = [
+const products = [
     {
         name: 'mobile',
         price: 20000,
@@ -11,6 +11,16 @@ const product = [
         name: 'laptop',
         price: 40000,
         brand: 'apple'
+    },
+    {
+        name: 'mobile',
+        price: 10000,
+        brand: 'realme'
+    },
+    {
+        name: 'mobile',
+        price: 25000,
+        brand: 'redmi'
     },
     {
         name: 'tab',
@@ -36,6 +46,10 @@ app.listen(PORT,()=>{
 
 app.get('/',(req,res)=>{
     res.send('Hello My Node Code');
+    console.log('Method',req.method);
+    console.log('path',req.path)
+    console.log("headers",Headers);
+    console.log('query Params',req.query);
 });
 
 app.get('/profile',(req,res)=>{
@@ -47,5 +61,28 @@ app.get('/products',(req,res)=>{
 //         name:'mobile',
 //         price:'2500'
 // })
-res.send({product})
+// console.log('Params',req.params);
+const {name,price,brand} = req.query;
+console.log(name)
+console.log(price);
+let results = products;
+
+if(name){
+    results = products.filter((product)=>{
+        return product.name === name
+    })
+}
+if(price){
+    results = results.filter((product)=>{
+        return product.price <= price
+    })
+}
+
+if(brand){
+    results = products.filter((product)=>{
+        return product.brand === brand;
+    })
+}
+// res.send(`${name} and ${price}`)
+res.send({total:results.length,results})
 })
